@@ -14,6 +14,8 @@ import { Stack, Button, FormControl, InputLabel, Select, MenuItem, Box } from '@
 const Home = (props) => {
     const items = props.item;
     const [likedMovie, updateLikedMovie] = useState([]);
+    const [Skip, setSkip] = useState(0)
+    const [Limit, setLimit] = useState(3)
     const [min, setMin] = useState(0)
     const [max, setMax] = useState(4)
     const [movis, setMovis] = useState([])
@@ -77,23 +79,19 @@ const Home = (props) => {
         return array
     }
 
-    const showFilterReasults = (filter) => {
-        props.loadAllMovies()
-    }
+
     const handleFilters = (filters, category) => {
 
 
         const newfilter = { ...Filters }
         newfilter[category] = filters //recupere id categorie
-        console.log("newfilter[category]", newfilter[category])
 
-        if (category === "moviectegory") {
 
-        }
+        console.log("filters", filters)
 
-        showFilterReasults(newfilter)
-        setFilters(newfilter)
+        props.filterMovie(filters, movis)
 
+        console.log("newfilter[category]", Filters)
     }
 
 

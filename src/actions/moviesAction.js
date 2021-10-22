@@ -83,21 +83,38 @@ export const removeToBasket = (item) => {
     //movies.splice(index, 1);
 
 }
-
-export const filterMovie = item => {
+export const filterMovie = (item, movis) => {
     return async function (dispatch) {
 
         const movies = await movies$
-        let index;
-
-
+        let tablfilter = [];
+        let tablfilterData = []
 
         for (let i in movies) {
-            if (parseInt(movies[i].id) === item) {
-                index = movies[i]
+            for (let x in item) {
+                //  console.log("item", item[x])
+                if (movies[i].id === item[x]) {
+                    //console.log("item2", parseInt(item[x]), movies[i])
+                    tablfilter.push(movies[i])
+
+                }
+            }
+            // eslint-disable-next-line no-loop-func
+
+        }
+
+        //console.log("index", tablfilter)
+        console.log(movis)
+        for (let i of movis) {
+            for (let j of tablfilter) {
+                if (i.category === j.category) {
+                    console.log(i)
+                    tablfilterData.push(i)
+                }
             }
         }
-        console.log(index)
+        console.log(tablfilterData)
+        tablfilterData = tablfilterData
         dispatch({
             type: FILTER_MOVIES_SUCCESS,
             payload: movies
