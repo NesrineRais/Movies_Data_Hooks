@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { connect } from 'react-redux';
-import { loadAllMovies } from '../actions/moviesAction'
+import { loadAllMovies, filterMovie } from '../actions/moviesAction'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -26,11 +26,12 @@ const Home = (props) => {
         //console.log(props.loadAllMovies())
         // eslint-disable-next-line
         !items.movies.length && props.loadAllMovies();
-        // console.log(movis)
+
         setMovis(items.movies)
 
-    }, [props.item])
+    }, [props])
 
+    //console.log(props.filterMovie(1))
 
 
     const onClickNext = () => {
@@ -76,14 +77,22 @@ const Home = (props) => {
         return array
     }
 
-
+    const showFilterReasults = (filter) => {
+        props.loadAllMovies()
+    }
     const handleFilters = (filters, category) => {
 
 
         const newfilter = { ...Filters }
-        newfilter[category] = filters
-        const data = items.movies
+        newfilter[category] = filters //recupere id categorie
+        console.log("newfilter[category]", newfilter[category])
 
+        if (category === "moviectegory") {
+
+        }
+
+        showFilterReasults(newfilter)
+        setFilters(newfilter)
 
     }
 
@@ -176,6 +185,7 @@ const mapStateToProps = (store) => {
 }
 const mapDispatchToProps = {
     loadAllMovies,
+    filterMovie
 
 }
 

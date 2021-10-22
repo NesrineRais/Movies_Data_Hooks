@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { FilterMovie } from '../actions/moviesAction';
 import { Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import Movie from './movie';
 import { Stack, Button, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
@@ -11,7 +10,6 @@ const MovieCategory = (props) => {
 
 
     useEffect(() => {
-        props.FilterMovie()
     }, [props])
 
     const handleChange = (value) => {
@@ -72,7 +70,6 @@ const mapStateToProps = (store) => {
 
 }
 const mapDispatchToProps = {
-    FilterMovie,
 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MovieCategory);

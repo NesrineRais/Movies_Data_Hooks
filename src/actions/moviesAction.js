@@ -71,7 +71,7 @@ export const removeToBasket = (item) => {
                 index = i;
             }
         }
-
+        console.log(index)
         movies.splice(index, 1);
 
 
@@ -84,11 +84,20 @@ export const removeToBasket = (item) => {
 
 }
 
-export const FilterMovie = (movies) => {
+export const filterMovie = item => {
     return async function (dispatch) {
 
+        const movies = await movies$
+        let index;
 
 
+
+        for (let i in movies) {
+            if (parseInt(movies[i].id) === item) {
+                index = movies[i]
+            }
+        }
+        console.log(index)
         dispatch({
             type: FILTER_MOVIES_SUCCESS,
             payload: movies
