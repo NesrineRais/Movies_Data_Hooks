@@ -12,30 +12,16 @@ import { Stack, Button, FormControl, InputLabel, Select, MenuItem, Box } from '@
 
 const Home = (props) => {
     const items = props.item;
+
     const [likedMovie, updateLikedMovie] = useState([]);
     const [min, setMin] = useState(0)
     const [max, setMax] = useState(4)
-    const [movis, setMovis] = useState([])
-
-    const [Filters, setFilters] = useState({
-        movieCategory: []
-    })
-    
-    useEffect(() => {
-        //console.log(props.loadAllMovies())
-        // eslint-disable-next-line
-        !items.movies.length && props.loadAllMovies();
-        // console.log(movis)
-        setMovis(items.movies)
-
-    }, [props.item])
-
-
+    const [movies, setMovies] = useState([])
 
     const onClickNext = () => {
-        console.log("coucouNext")
+        //console.log("coucouNext")
         console.log(items.movies)
-        if (max <= movis.length - 1) {
+        if (max <= movies.length - 1) {
             setMin(min => min + 4)
             setMax(max => max + 4)
             console.log("min next", min)
@@ -44,7 +30,7 @@ const Home = (props) => {
     }
 
     const onClickPrev = () => {
-        console.log("coucouPrev")
+        //console.log("coucouPrev")
         if (min >= 4) {
 
             setMin(min => min - 4)
@@ -55,46 +41,27 @@ const Home = (props) => {
     }
 
     const handleSelectChange = (e) => {
+        // console.log(e.target.value)
         setMax(e.target.value);
-        console.log(e.target.value)
     }
 
+    useEffect(() => {
 
-    const handleCategory = (value) => {
-        const data = items.movies
-        console.log(data)
-        let array = [];
+        !items.movies.length && props.loadAllMovies();
+        setMovies(items.moviesFiltered);
 
-        for (let key in data) {
-
-            if (data[key]._id === parseInt(value, 10)) {
-                array = data[key].array;
-            }
-        }
-        console.log('array', array)
-        return array
-    }
-
-
-    const handleFilters = (filters, category) => {
-
-
-        const newfilter = { ...Filters }
-        newfilter[category] = filters
-        const data = items.movies
-
-
-    }
-
+        // eslint-disable-next-line
+    }, [props])
 
     return (
 
         <Container fluid="md" className="m-5" >
             <h1>Movies</h1>
             <Row>
-                <MovieCategory handleFilters={filters => handleFilters(filters, "movieCategory")} />
-                {movis != null &&
-                    movis.map((movie, key) => {
+                <MovieCategory />
+                {movies != null &&
+                    // eslint-disable-next-line
+                    movies.map((movie, key) => {
                         if (key >= min && key < max) {
                             return (
 
@@ -158,25 +125,17 @@ const Home = (props) => {
             </Row>
         </Container>
 
-
     )
-
-
-
-
 }
 
 const mapStateToProps = (store) => {
     return {
-        item: store.movies
+        item: store.movies,
     }
-
-
 }
+
 const mapDispatchToProps = {
     loadAllMovies,
-
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
-

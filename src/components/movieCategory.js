@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { FilterMovie } from '../actions/moviesAction';
+import { filterMovie, loadAllMovies } from '../actions/moviesAction';
 import { Checkbox, FormGroup } from '@mui/material';
 
 const MovieCategory = (props) => {
+    const items = props.item;
+
     // Non duplicated categories
     const nonDuplicatedCategories = Array.from(new Set(props.item.movies.map(j => j.category)));
 
     const [movies, setMovies] = useState([]);
 
     const handleChange = (e) => {
-        console.log(e.target.checked);
-
         // Copy from global state to a new array
         let moviesByCategories = [...movies];
         let moviesFiltered;
@@ -29,25 +29,26 @@ const MovieCategory = (props) => {
             // Set state & Accept only non duplicated movies
             setMovies([...new Set(moviesByCategories)]);
 
-            console.log(moviesByCategories);
+            props.filterMovie(moviesByCategories);
+
         } else {
             //console.log("UN-CHECKED");
             //console.log(e.target.value);
 
-            // Filter movies by not the same category
+            // Filter movies by category are not the same
             moviesFiltered = moviesByCategories.filter(movie => movie.category.toLowerCase() !== e.target.value.toLowerCase());
+
             setMovies([...moviesFiltered]);
 
-            FilterMovie(movies);
-
+            props.filterMovie(moviesFiltered);
         }
-
     }
 
-
     useEffect(() => {
-        console.log(movies);
-        //movies.length === 0 && setMovies(props.item.movies)
+        // If there no left movies filtered && load all movies
+        items.moviesFiltered.length === 0 && props.loadAllMovies();
+        
+        // eslint-disable-next-line
     }, [props])
 
     return (
@@ -61,8 +62,7 @@ const MovieCategory = (props) => {
                                 <Checkbox
                                     onChange={handleChange}
                                     value={category}
-                                />
-                                {category}
+                                /> {category}
                             </div>
                         )
                     })}
@@ -78,7 +78,8 @@ const mapStateToProps = (store) => {
     }
 }
 const mapDispatchToProps = {
-    FilterMovie
+    filterMovie,
+    loadAllMovies
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieCategory);

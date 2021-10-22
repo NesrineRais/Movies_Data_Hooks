@@ -25,7 +25,7 @@ export default function MoviesReducer(state = initialState, action) {
                 ...state,
                 loading: false,
                 movies: action.payload,
-                error: ''
+                moviesFiltered: state.moviesFiltered.length === 0 ? action.payload : state.moviesFiltered
             }
         case REMOVE_MOVIES_SUCCESS:
             return {
