@@ -1,66 +1,74 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { FilterMovie } from '../actions/moviesAction';
-import { Checkbox, FormGroup, FormControlLabel } from '@mui/material';
-import Movie from './movie';
-import { Stack, Button, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
-import Card from 'react-bootstrap/Card'
+import { Checkbox, FormGroup } from '@mui/material';
 
 const MovieCategory = (props) => {
-    const [checked, setChecked] = useState([]);
+    // Non duplicated categories
+    const nonDuplicatedCategories = Array.from(new Set(props.item.movies.map(j => j.category)));
+
+    const [movies, setMovies] = useState([]);
+
+    const handleChange = (e) => {
+        console.log(e.target.checked);
+
+        // Copy from global state to a new array
+        let moviesByCategories = [...movies];
+        let moviesFiltered;
+
+        // If checkbox is checked
+        if(e.target.checked) {
+            //console.log("CHECKED");
+            //console.log(e.target.value);
+
+            // Filter movies by category
+            moviesFiltered = props.item.movies.filter(movie => movie.category.toLowerCase() === e.target.value.toLowerCase());
+
+            moviesByCategories.push(...moviesFiltered)
+
+            // Set state & Accept only non duplicated movies
+            setMovies([...new Set(moviesByCategories)]);
+
+            console.log(moviesByCategories);
+        } else {
+            //console.log("UN-CHECKED");
+            //console.log(e.target.value);
+
+            // Filter movies by not the same category
+            moviesFiltered = moviesByCategories.filter(movie => movie.category.toLowerCase() !== e.target.value.toLowerCase());
+            setMovies([...moviesFiltered]);
+
+            FilterMovie(movies);
+
+        }
+
+    }
 
 
     useEffect(() => {
-        props.FilterMovie()
+        console.log(movies);
+        //movies.length === 0 && setMovies(props.item.movies)
     }, [props])
-
-    const handleChange = (value) => {
-        const currentIndex = checked.indexOf(value)
-        const newCheck = [...checked]
-        console.log(currentIndex, value, newCheck)
-        if (currentIndex === -1) {
-            newCheck.push(value)
-            console.log(checked)
-        } else {
-            newCheck.splice(currentIndex, 1)
-        }
-        setChecked(newCheck)
-        props.handleFilters(newCheck)
-    }
-
-    //remove duplicate data
-    function removeDuplicates(data, key) {
-
-        return [
-            ...new Map(data.map(item => [key(item), item])).values()
-        ]
-
-    };
 
     return (
 
-        < div >
+        <div>
             <FormGroup>
                 <div>
-                    {props.item.movies != null && removeDuplicates(props.item.movies, item => item.category).map((movie, key) => {
-
-
+                    {nonDuplicatedCategories.length && nonDuplicatedCategories.map((category, idxKey) => {
                         return (
-                            <div key={key}>
+                            <div key={idxKey}>
                                 <Checkbox
-                                    checked={checked.indexOf(movie.id) === -1 ? false : true}
-                                    onChange={() => handleChange(movie.id)}
-                                    key={key}
-                                    value={movie.category}
-                                /> {movie.category}
-
+                                    onChange={handleChange}
+                                    value={category}
+                                />
+                                {category}
                             </div>
                         )
                     })}
                 </div>
-
             </FormGroup>
-        </div >
+        </div>
     )
 }
 
@@ -68,11 +76,9 @@ const mapStateToProps = (store) => {
     return {
         item: store.movies
     }
-
-
 }
 const mapDispatchToProps = {
-    FilterMovie,
-
+    FilterMovie
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(MovieCategory);

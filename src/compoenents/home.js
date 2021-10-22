@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import { connect } from 'react-redux';
 import { loadAllMovies } from '../actions/moviesAction'
 import Card from 'react-bootstrap/Card'
@@ -20,8 +19,8 @@ const Home = (props) => {
 
     const [Filters, setFilters] = useState({
         movieCategory: []
-
     })
+    
     useEffect(() => {
         //console.log(props.loadAllMovies())
         // eslint-disable-next-line

@@ -86,9 +86,6 @@ export const removeToBasket = (item) => {
 
 export const FilterMovie = (movies) => {
     return async function (dispatch) {
-
-
-
         dispatch({
             type: FILTER_MOVIES_SUCCESS,
             payload: movies
