@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import { connect } from 'react-redux';
 import { loadAllMovies, filterMovie } from '../actions/moviesAction'
 import Card from 'react-bootstrap/Card'
@@ -9,7 +8,6 @@ import Col from 'react-bootstrap/Col'
 import Movie from './movie';
 import MovieCategory from './movieCategory';
 import { Stack, Button, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
-
 
 const Home = (props) => {
     const items = props.item;
@@ -22,19 +20,24 @@ const Home = (props) => {
 
     const [Filters, setFilters] = useState({
         movieCategory: []
-
     })
+
     useEffect(() => {
-        //console.log(props.loadAllMovies())
-        // eslint-disable-next-line
+        // console.log(props.loadAllMovies())
+        
+        // Le cas normal, s'il y a rien, on loadAllMovies
         !items.movies.length && props.loadAllMovies();
 
-        setMovis(items.movies)
+        // Le cas ou les catégories ne sont plus séléctionnées
+        // les checkboxs ne sont plus checké, on loadAllMovies à nouveau
+        !items.moviesFiltered.length && props.loadAllMovies();
 
+        // Dès le chargement on remplis le state
+        // en ajoutant notre state global de redux dans le useState de ce composant
+        setMovis(items.moviesFiltered)
+
+        // eslint-disable-next-line
     }, [props])
-
-    //console.log(props.filterMovie(1))
-
 
     const onClickNext = () => {
         console.log("coucouNext")
@@ -63,7 +66,6 @@ const Home = (props) => {
         console.log(e.target.value)
     }
 
-
     const handleCategory = (value) => {
         const data = items.movies
         console.log(data)
@@ -79,10 +81,7 @@ const Home = (props) => {
         return array
     }
 
-
     const handleFilters = (filters, category) => {
-
-
         const newfilter = { ...Filters }
         newfilter[category] = filters //recupere id categorie
 
@@ -93,7 +92,6 @@ const Home = (props) => {
 
         console.log("newfilter[category]", Filters)
     }
-
 
     return (
 
@@ -165,13 +163,7 @@ const Home = (props) => {
                 </Stack>
             </Row>
         </Container>
-
-
     )
-
-
-
-
 }
 
 const mapStateToProps = (store) => {
@@ -181,6 +173,7 @@ const mapStateToProps = (store) => {
 
 
 }
+
 const mapDispatchToProps = {
     loadAllMovies,
     filterMovie

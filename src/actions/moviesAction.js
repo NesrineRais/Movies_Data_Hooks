@@ -7,26 +7,17 @@ import {
 } from './actions-types';
 import { movies$ } from '../movies';
 
-
 export const loadAllMovies = () => {
-
     return async function (dispatch) {
-
         dispatch(fetchMoviesRequest())
         try {
             const movies = await movies$
             dispatch(fetchMoviesSuccess(movies))
             //dispatch(removeToBasket(movies))
-
-
-
         } catch (err) {
             dispatch(fetchMoviesFailure(err.message))
         }
-
-
     }
-
 }
 
 export const fetchMoviesRequest = () => {
@@ -41,13 +32,11 @@ export const fetchMoviesRequest = () => {
 
 export const fetchMoviesSuccess = movies => {
     //console.log("fetchMoviesSuccess")
-
     return {
         type: LOAD_MOVIES_SUCCESS,
         payload: movies
 
     }
-
 }
 
 export const fetchMoviesFailure = error => {
@@ -80,10 +69,11 @@ export const removeToBasket = (item) => {
             payload: movies
         })
     }
-    //movies.splice(index, 1);
-
+    // movies.splice(index, 1);
 }
+
 export const filterMovie = (item, movis) => {
+    
     return async function (dispatch) {
 
         const movies = await movies$
@@ -96,28 +86,29 @@ export const filterMovie = (item, movis) => {
                 if (movies[i].id === item[x]) {
                     //console.log("item2", parseInt(item[x]), movies[i])
                     tablfilter.push(movies[i])
-
+                    console.log(movies[i]);
                 }
             }
             // eslint-disable-next-line no-loop-func
-
         }
+        // console.log("tablfilter", tablfilter);
 
-        //console.log("index", tablfilter)
-        console.log(movis)
+        // console.log("index", tablfilter)
+        // console.log(movis)
         for (let i of movis) {
             for (let j of tablfilter) {
                 if (i.category === j.category) {
-                    console.log(i)
                     tablfilterData.push(i)
                 }
             }
         }
-        console.log(tablfilterData)
-        tablfilterData = tablfilterData
+
+        tablfilterData = [...tablfilter, ...tablfilterData];
+        // console.log("tablfilterData", tablfilterData)
+
         dispatch({
             type: FILTER_MOVIES_SUCCESS,
-            payload: movies
+            payload: [...new Set(tablfilterData)]
         })
     }
 }

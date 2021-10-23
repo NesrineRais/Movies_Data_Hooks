@@ -9,6 +9,7 @@ import {
 const initialState = {
     loading: false,
     movies: [],
+    moviesFiltered: [],
     error: ''
 }
 
@@ -22,9 +23,10 @@ export default function MoviesReducer(state = initialState, action) {
             break;
         case LOAD_MOVIES_SUCCESS:
             return {
+                ...state,
                 loading: false,
                 movies: action.payload,
-                error: ''
+                moviesFiltered: state.moviesFiltered.length === 0 ? action.payload : state.moviesFiltered
             }
             break;
         case REMOVE_MOVIES_SUCCESS:
@@ -38,13 +40,13 @@ export default function MoviesReducer(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                movies: action.payload,
+                moviesFiltered: action.payload,
             }
             break;
         case LOAD_MOVIES_FAILURE:
             return {
                 loading: false,
-                error: action.payload
+                error: [...new Set(action.payload)]
             }
             break;
 
