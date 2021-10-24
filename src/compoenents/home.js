@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import { connect } from 'react-redux';
 import { loadAllMovies, filterMovie } from '../actions/moviesAction'
 import Card from 'react-bootstrap/Card'
@@ -9,7 +8,6 @@ import Col from 'react-bootstrap/Col'
 import Movie from './movie';
 import MovieCategory from './movieCategory';
 import { Stack, Button, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
-
 
 const Home = (props) => {
     const items = props.item;
@@ -22,19 +20,23 @@ const Home = (props) => {
 
     const [Filters, setFilters] = useState({
         movieCategory: []
-
     })
+
     useEffect(() => {
-        //console.log(props.loadAllMovies())
+        // console.log(props.loadAllMovies())
+
+
+
+        // Le cas ou les catégories ne sont plus séléctionnées
+        // les checkboxs ne sont plus checké, on loadAllMovies à nouveau
+        !items.moviesFiltered.length && props.loadAllMovies();
+
+        // Dès le chargement on remplis le state
+        // en ajoutant notre state global de redux dans le useState de ce composant
+        setMovis(items.moviesFiltered)
+
         // eslint-disable-next-line
-        !items.movies.length && props.loadAllMovies();
-
-        setMovis(items.movies)
-        //console.log(props.filterMovie())
-
     }, [props])
-
-
 
     const onClickNext = () => {
         console.log("coucouNext")
@@ -68,8 +70,6 @@ const Home = (props) => {
 
 
     const handleFilters = (filters, category) => {
-
-
         const newfilter = { ...Filters }
         newfilter[category] = filters //recupere id categorie
 
@@ -78,6 +78,7 @@ const Home = (props) => {
         props.filterMovie(filters, movis)
 
     }
+
     return (
 
         <Container fluid="md" className="m-5" >
@@ -148,13 +149,7 @@ const Home = (props) => {
                 </Stack>
             </Row>
         </Container>
-
-
     )
-
-
-
-
 }
 
 const mapStateToProps = (store) => {
@@ -164,6 +159,7 @@ const mapStateToProps = (store) => {
 
 
 }
+
 const mapDispatchToProps = {
     loadAllMovies,
     filterMovie

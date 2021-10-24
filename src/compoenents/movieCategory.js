@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Checkbox, FormGroup, FormControlLabel } from '@mui/material';
-import Movie from './movie';
-import { Stack, Button, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
-import Card from 'react-bootstrap/Card'
+import { Checkbox, FormGroup } from '@mui/material';
 
 const MovieCategory = (props) => {
     const [checked, setChecked] = useState([]);
-
-
-    useEffect(() => {
-    }, [props])
 
     const handleChange = (value) => {
         const currentIndex = checked.indexOf(value)
@@ -20,11 +13,12 @@ const MovieCategory = (props) => {
         } else {
             newCheck.splice(currentIndex, 1)
         }
+
         setChecked(newCheck)
         props.handleFilters(newCheck)
     }
 
-    //remove duplicate data
+    // remove duplicate data
     function removeDuplicates(data, key) {
 
         return [
@@ -39,8 +33,6 @@ const MovieCategory = (props) => {
             <FormGroup>
                 <div>
                     {props.item.movies != null && removeDuplicates(props.item.movies, item => item.category).map((movie, key) => {
-
-
                         return (
                             <div key={key}>
                                 <Checkbox
@@ -64,10 +56,10 @@ const mapStateToProps = (store) => {
     return {
         item: store.movies
     }
-
-
 }
+
 const mapDispatchToProps = {
-
+    
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(MovieCategory);
