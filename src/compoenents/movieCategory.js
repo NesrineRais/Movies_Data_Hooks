@@ -10,6 +10,7 @@ const MovieCategory = (props) => {
         const newCheck = [...checked]
         if (currentIndex === -1) {
             newCheck.push(value)
+            console.log("newCheck", newCheck)
         } else {
             newCheck.splice(currentIndex, 1)
         }
@@ -59,7 +60,7 @@ const mapStateToProps = (store) => {
 }
 
 const mapDispatchToProps = {
-    
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieCategory);

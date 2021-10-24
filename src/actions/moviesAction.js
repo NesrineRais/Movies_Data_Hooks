@@ -80,13 +80,17 @@ export const filterMovie = (item, movis) => {
         let tablfilter = [];
         let tablfilterData = []
 
-        for (let i in movies) {
-            for (let x in item) {
-                //  console.log("item", item[x])
-                if (movies[i].id === item[x]) {
-                    //console.log("item2", parseInt(item[x]), movies[i])
+        for (let i of movies) {
+            console.log("item2", i)
+
+            for (let x of item) {
+                console.log("itemx", x)
+                if (i.category === x.category) {
+
                     tablfilter.push(movies[i])
                     console.log(movies[i]);
+
+
                 }
             }
             // eslint-disable-next-line no-loop-func
@@ -95,15 +99,6 @@ export const filterMovie = (item, movis) => {
 
         //console.log("index", tablfilter)
 
-        // console.log("index", tablfilter)
-        // console.log(movis)
-        // for (let i of movis) {
-        //     for (let j of tablfilter) {
-        //         if (i.category === j.category) {
-        //             tablfilterData.push(i)
-        //         }
-        //     }
-        // }
 
         tablfilterData = [...tablfilter, ...tablfilterData];
         // console.log("tablfilterData", tablfilterData)
