@@ -104,11 +104,9 @@ export const filterMovie = (item, movis) => {
         }
 
         //console.log("index", tablfilter)
-        console.log(movis)
         for (let i of movis) {
             for (let j of tablfilter) {
                 if (i.category === j.category) {
-                    console.log(i)
                     tablfilterData.push(i)
                 }
             }

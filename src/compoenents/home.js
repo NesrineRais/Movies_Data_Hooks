@@ -30,10 +30,10 @@ const Home = (props) => {
         !items.movies.length && props.loadAllMovies();
 
         setMovis(items.movies)
+        //console.log(props.filterMovie())
 
     }, [props])
 
-    //console.log(props.filterMovie(1))
 
 
     const onClickNext = () => {
@@ -64,20 +64,7 @@ const Home = (props) => {
     }
 
 
-    const handleCategory = (value) => {
-        const data = items.movies
-        console.log(data)
-        let array = [];
 
-        for (let key in data) {
-
-            if (data[key]._id === parseInt(value, 10)) {
-                array = data[key].array;
-            }
-        }
-        console.log('array', array)
-        return array
-    }
 
 
     const handleFilters = (filters, category) => {
@@ -86,15 +73,11 @@ const Home = (props) => {
         const newfilter = { ...Filters }
         newfilter[category] = filters //recupere id categorie
 
-
-        console.log("filters", filters)
+        console.log(filters)
 
         props.filterMovie(filters, movis)
 
-        console.log("newfilter[category]", Filters)
     }
-
-
     return (
 
         <Container fluid="md" className="m-5" >

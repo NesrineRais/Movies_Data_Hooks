@@ -15,10 +15,8 @@ const MovieCategory = (props) => {
     const handleChange = (value) => {
         const currentIndex = checked.indexOf(value)
         const newCheck = [...checked]
-        console.log(currentIndex, value, newCheck)
         if (currentIndex === -1) {
             newCheck.push(value)
-            console.log(checked)
         } else {
             newCheck.splice(currentIndex, 1)
         }
