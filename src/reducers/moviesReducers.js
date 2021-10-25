@@ -7,9 +7,9 @@ import {
 } from '../actions/actions-types'
 
 const initialState = {
-    loading: false,
     movies: [],
     moviesFiltered: [],
+    loading: false,
     error: ''
 }
 
@@ -26,7 +26,7 @@ export default function MoviesReducer(state = initialState, action) {
                 ...state,
                 loading: false,
                 movies: action.payload,
-                moviesFiltered: state.moviesFiltered.length === 0 ? action.payload : state.moviesFiltered
+                moviesFiltered: action.payload
             }
             break;
         case REMOVE_MOVIES_SUCCESS:

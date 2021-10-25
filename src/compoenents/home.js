@@ -29,12 +29,11 @@ const Home = (props) => {
 
         // Le cas ou les catégories ne sont plus séléctionnées
         // les checkboxs ne sont plus checké, on loadAllMovies à nouveau
-        !items.moviesFiltered.length && props.loadAllMovies();
+        !props.item.moviesFiltered.length && props.loadAllMovies();
 
         // Dès le chargement on remplis le state
         // en ajoutant notre state global de redux dans le useState de ce composant
-        setMovis(items.moviesFiltered)
-        //console.log(items.moviesFiltered)
+        console.log(items.moviesFiltered)
 
         // eslint-disable-next-line
     }, [props])
@@ -42,7 +41,7 @@ const Home = (props) => {
     const onClickNext = () => {
         console.log("coucouNext")
         console.log(items.movies)
-        if (max <= movis.length - 1) {
+        if (max <= props.item.moviesFiltered.length - 1) {
             setMin(min => min + 4)
             setMax(max => max + 4)
             console.log("min next", min)
@@ -76,7 +75,7 @@ const Home = (props) => {
 
         console.log("filters", props)
 
-        props.filterMovie(filters, movis)
+        props.filterMovie(filters, props.item.moviesFiltered)
 
     }
 
@@ -86,8 +85,8 @@ const Home = (props) => {
             <h1>Movies</h1>
             <Row>
                 <MovieCategory handleFilters={filters => handleFilters(filters, "movieCategory")} />
-                {movis != null &&
-                    movis.map((movie, key) => {
+                {props.item.moviesFiltered != null &&
+                    props.item.moviesFiltered.map((movie, key) => {
                         if (key >= min && key < max) {
                             return (
 

@@ -79,7 +79,6 @@ export const filterMovie = (item, movis) => {
 
         let tablfilter = [];
         let tablfilterData = [];
-        let tablfilterDataa = [];
 
         let data = [];
         // console.log(item)
@@ -116,7 +115,7 @@ export const filterMovie = (item, movis) => {
 
         console.log(tablfilter)
 
-        tablfilterData = [...tablfilter, ...tablfilterDataa];
+        tablfilterData = [...tablfilter, ...tablfilterData];
         console.log("tablfilterData", tablfilterData)
 
         dispatch({
