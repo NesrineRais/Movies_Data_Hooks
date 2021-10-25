@@ -7,9 +7,9 @@ import {
 } from '../actions/actions-types'
 
 const initialState = {
-    loading: false,
     movies: [],
     moviesFiltered: [],
+    loading: false,
     error: ''
 }
 
@@ -26,7 +26,14 @@ export default function MoviesReducer(state = initialState, action) {
                 ...state,
                 loading: false,
                 movies: action.payload,
+                // On test s'il y a pas de check coché, on donne le data initial si oui on donne les movie qui ont été coché par catégorie
                 moviesFiltered: state.moviesFiltered.length === 0 ? action.payload : state.moviesFiltered
+            }
+            break;
+        case LOAD_MOVIES_FAILURE:
+            return {
+                loading: false,
+                error: action.payload
             }
             break;
         case REMOVE_MOVIES_SUCCESS:
@@ -40,16 +47,9 @@ export default function MoviesReducer(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                moviesFiltered: action.payload,
+                moviesFiltered: action.payload
             }
             break;
-        case LOAD_MOVIES_FAILURE:
-            return {
-                loading: false,
-                error: [...new Set(action.payload)]
-            }
-            break;
-
     }
 
     return state;

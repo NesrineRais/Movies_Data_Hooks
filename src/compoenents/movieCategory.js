@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import { Checkbox, FormGroup } from '@mui/material';
+import { connect } from 'react-redux';
 
 const MovieCategory = (props) => {
     const [checked, setChecked] = useState([]);
@@ -59,8 +59,4 @@ const mapStateToProps = (store) => {
     }
 }
 
-const mapDispatchToProps = {
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MovieCategory);
+export default connect(mapStateToProps, {})(MovieCategory);

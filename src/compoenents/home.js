@@ -11,12 +11,12 @@ import { Stack, Button, FormControl, InputLabel, Select, MenuItem, Box } from '@
 
 const Home = (props) => {
     const items = props.item;
+
     const [likedMovie, updateLikedMovie] = useState([]);
     const [Skip, setSkip] = useState(0)
     const [Limit, setLimit] = useState(3)
     const [min, setMin] = useState(0)
     const [max, setMax] = useState(4)
-    const [movis, setMovis] = useState([])
 
     const [Filters, setFilters] = useState({
         movieCategory: []
@@ -25,16 +25,9 @@ const Home = (props) => {
     useEffect(() => {
         // console.log(props.loadAllMovies())
 
-
-
         // Le cas ou les catégories ne sont plus séléctionnées
         // les checkboxs ne sont plus checké, on loadAllMovies à nouveau
-        !items.moviesFiltered.length && props.loadAllMovies();
-
-        // Dès le chargement on remplis le state
-        // en ajoutant notre state global de redux dans le useState de ce composant
-        setMovis(items.moviesFiltered)
-        //console.log(items.moviesFiltered)
+        items.moviesFiltered.length === 0 && props.loadAllMovies();
 
         // eslint-disable-next-line
     }, [props])
@@ -42,7 +35,7 @@ const Home = (props) => {
     const onClickNext = () => {
         console.log("coucouNext")
         console.log(items.movies)
-        if (max <= movis.length - 1) {
+        if (max <= items.movies.length - 1) {
             setMin(min => min + 4)
             setMax(max => max + 4)
             console.log("min next", min)
@@ -66,17 +59,13 @@ const Home = (props) => {
         //console.log(e.target.value)
     }
 
-
-
-
-
     const handleFilters = (filters, category) => {
         const newfilter = { ...Filters }
         newfilter[category] = filters //recupere id categorie
 
         console.log("filters", props)
 
-        props.filterMovie(filters, movis)
+        props.filterMovie(filters, items.movies)
 
     }
 
@@ -86,8 +75,8 @@ const Home = (props) => {
             <h1>Movies</h1>
             <Row>
                 <MovieCategory handleFilters={filters => handleFilters(filters, "movieCategory")} />
-                {movis != null &&
-                    movis.map((movie, key) => {
+                {items.moviesFiltered.length &&
+                    items.moviesFiltered.map((movie, key) => {
                         if (key >= min && key < max) {
                             return (
 
@@ -156,18 +145,12 @@ const Home = (props) => {
 const mapStateToProps = (store) => {
     return {
         item: store.movies,
-        item1: store.moviesFiltered
-
     }
-
-
 }
 
 const mapDispatchToProps = {
     loadAllMovies,
     filterMovie
-
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
-

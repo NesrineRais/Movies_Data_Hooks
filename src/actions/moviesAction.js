@@ -78,8 +78,8 @@ export const filterMovie = (item, movis) => {
 
 
         let tablfilter = [];
-        let tablfilterData = [];
-        let tablfilterDataa = [];
+        //let tablfilterData = [];
+        //let tablfilterDataa = [];
 
         let data = [];
         // console.log(item)
@@ -106,22 +106,18 @@ export const filterMovie = (item, movis) => {
                 if ((movis[j].category) === elmn) {
                     //movis[j].push(movis[j]
                     // tablfilter.concat(movis[j])
-                    tablfilter.push(movis[j])
-
-
+                    tablfilter.push(movis[j]);
                 }
             }
+
         })
 
 
-        console.log(tablfilter)
-
-        tablfilterData = [...tablfilter, ...tablfilterDataa];
-        console.log("tablfilterData", tablfilterData)
+        console.log("TABLFILTERE", tablfilter)
 
         dispatch({
             type: FILTER_MOVIES_SUCCESS,
-            payload: tablfilterData
+            payload: tablfilter
         })
     }
 }
