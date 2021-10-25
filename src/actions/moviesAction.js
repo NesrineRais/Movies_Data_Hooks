@@ -112,7 +112,6 @@ export const filterMovie = (item, movis) => {
 
         })
 
-
         console.log("TABLFILTERE", tablfilter)
 
         dispatch({
