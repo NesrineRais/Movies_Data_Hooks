@@ -9,6 +9,8 @@ Il faudra revoir dans movieAction ou tu fais tes boucle for, moi je vais aussi e
 
 Merci !
 
+### Réponse sur le @TODO:
+
 Bonjour c'est fait j'ai fait les modification demander j'ai résolue le probléme et j'ai afficher le checkbox avec le nombre des élèments
 
 Merci
