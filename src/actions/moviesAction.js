@@ -76,36 +76,52 @@ export const filterMovie = (item, movis) => {
 
     return async function (dispatch) {
 
-        const movies = await movies$
+
         let tablfilter = [];
-        let tablfilterData = []
+        let tablfilterData = [];
+        let tablfilterDataa = [];
 
-        for (let i of movies) {
-            console.log("item2", i)
+        let data = [];
+        // console.log(item)
 
-            for (let x of item) {
-                console.log("itemx", x)
-                if (i.category === x.category) {
+        console.log(item, "item")
+        console.log(movis, "movis")
 
-                    tablfilter.push(movies[i])
-                    console.log(movies[i]);
+        for (let i in movis) {
+            // console.log(movis[i])
+            const index = item.forEach(function (element) {
+                //console.log(element);
+                if ((movis[i].id) === element) {
+                    console.log(movis[i].category);
+                    data.push(movis[i].category)
+                }
+            })
+
+        }
+
+        const filtre = data.forEach(function (elmn) {
+            //console.log(element);
+            for (let j in movis) {
+
+                if ((movis[j].category) === elmn) {
+                    //movis[j].push(movis[j]
+                    // tablfilter.concat(movis[j])
+                    tablfilter.push(movis[j])
 
 
                 }
             }
-            // eslint-disable-next-line no-loop-func
-        }
-        // console.log("tablfilter", tablfilter);
-
-        //console.log("index", tablfilter)
+        })
 
 
-        tablfilterData = [...tablfilter, ...tablfilterData];
-        // console.log("tablfilterData", tablfilterData)
+        console.log(tablfilter)
+
+        tablfilterData = [...tablfilter, ...tablfilterDataa];
+        console.log("tablfilterData", tablfilterData)
 
         dispatch({
             type: FILTER_MOVIES_SUCCESS,
-            payload: [...new Set(tablfilterData)]
+            payload: tablfilterData
         })
     }
 }

@@ -34,6 +34,7 @@ const Home = (props) => {
         // Dès le chargement on remplis le state
         // en ajoutant notre state global de redux dans le useState de ce composant
         setMovis(items.moviesFiltered)
+        //console.log(items.moviesFiltered)
 
         // eslint-disable-next-line
     }, [props])
@@ -62,7 +63,7 @@ const Home = (props) => {
 
     const handleSelectChange = (e) => {
         setMax(e.target.value);
-        console.log(e.target.value)
+        //console.log(e.target.value)
     }
 
 
@@ -73,7 +74,7 @@ const Home = (props) => {
         const newfilter = { ...Filters }
         newfilter[category] = filters //recupere id categorie
 
-        console.log(filters)
+        console.log("filters", props)
 
         props.filterMovie(filters, movis)
 
@@ -154,7 +155,9 @@ const Home = (props) => {
 
 const mapStateToProps = (store) => {
     return {
-        item: store.movies
+        item: store.movies,
+        item1: store.moviesFiltered
+
     }
 
 
