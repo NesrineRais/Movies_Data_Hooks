@@ -8,3 +8,7 @@ mais dès qu'on selectionne sur le film ou il y a qu'un seule quantité et puis 
 Il faudra revoir dans movieAction ou tu fais tes boucle for, moi je vais aussi essayer de résoudre.
 
 Merci !
+
+Bonjour c'est fait j'ai fait les modification demander j'ai résolue le probléme et j'ai afficher le checkbox avec le nombre des élèments
+
+Merci
